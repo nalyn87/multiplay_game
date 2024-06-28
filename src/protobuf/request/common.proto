@@ -3,7 +3,7 @@ syntax = 'proto3';
 package common;
 
 message CommonPacket {
-    int32 hanlerId = 1;
+    int32 handlerId = 1;
     string userId = 2;
     string version = 3;
     bytes payload = 4;

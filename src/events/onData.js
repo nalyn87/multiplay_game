@@ -1,5 +1,6 @@
 import { config } from '../config/config.js';
 import { PACKET_TYPE } from '../constants/header.js';
+import { packetParser } from '../utils/packetParser.js';
 
 export const onData = (socket) => (data) => {
   socket.buffer = Buffer.concat([socket.buffer, data]);
@@ -21,15 +22,21 @@ export const onData = (socket) => (data) => {
       console.log(`packetType: ${packetType}`)
       console.log(packet)
 
-    //   try {
-    //     switch (packetType) {
-    //         case PACKET_TYPE.PING: {
-
-    //         }
-    //     }
-    //   } catch (err) {
-    //     console.error(err)
-    //   }
+      try {
+        switch (packetType) {
+            case PACKET_TYPE.PING: {
+                break;
+            }
+            case PACKET_TYPE.NORMAL: {
+                const {handlerId, userId, payload} = packetParser(packet)
+                console.log(`handlerId: ${handlerId}`)
+                console.log(`userId: ${userId}`)
+                console.log(`payload: ${payload}`)
+            }
+        }
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 };

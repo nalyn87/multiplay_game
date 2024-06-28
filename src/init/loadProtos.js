@@ -48,6 +48,6 @@ export const loadProtos = async () => {
 };
 
 // 얕은 복사로 반환
-export const getProtoFiles = () => {
+export const getProtoMessages = () => {
   return { ...protoMessages };
 };
