@@ -1,8 +1,9 @@
 import { config } from '../config/config.js';
 import { PACKET_TYPE } from '../constants/header.js';
+import { getHandlerById } from '../handlers/index.js';
 import { packetParser } from '../utils/packetParser.js';
 
-export const onData = (socket) => (data) => {
+export const onData = (socket) => async (data) => {
   socket.buffer = Buffer.concat([socket.buffer, data]);
 
   const totalHeaderLength = config.packet.totalLength + config.packet.typeLength;
@@ -17,25 +18,23 @@ export const onData = (socket) => (data) => {
     } else {
       const packet = socket.buffer.slice(totalHeaderLength, length);
       socket.buffer = socket.buffer.slice(length);
-
-      console.log(`length: ${length}`)
-      console.log(`packetType: ${packetType}`)
-      console.log(packet)
-
       try {
         switch (packetType) {
-            case PACKET_TYPE.PING: {
-                break;
-            }
-            case PACKET_TYPE.NORMAL: {
-                const {handlerId, userId, payload} = packetParser(packet)
-                console.log(`handlerId: ${handlerId}`)
-                console.log(`userId: ${userId}`)
-                console.log(`payload: ${payload}`)
-            }
+          case PACKET_TYPE.Ping: {
+            break;
+          }
+          case PACKET_TYPE.Normal: {
+            const { handlerId, userId, payload } = packetParser(packet);
+
+            const handler = getHandlerById(handlerId).handler;
+            await handler({ socket, userId, payload });
+          }
+          case PACKET_TYPE.Location: {
+            break;
+          }
         }
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
   }
