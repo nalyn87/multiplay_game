@@ -4,6 +4,7 @@ import { onError } from "./onError.js";
 
 export const onConnection = (socket) => {
   console.log(`클라이언트가 접속하였습니다`);
+  // console.log(socket)
 
   socket.buffer = Buffer.alloc(0);
 

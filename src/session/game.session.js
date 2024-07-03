@@ -4,6 +4,7 @@ import { gameSession } from './session.js';
 export const addGameSession = () => {
   const session = new Game();
   gameSession.push(session);
+  console.log(gameSession)
   return session;
 };
 

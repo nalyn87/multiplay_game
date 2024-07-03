@@ -10,6 +10,7 @@ const initialHandler = ({ socket, userId, payload }) => {
   const user = getUserById(userId);
   const gameSession = getGameSession();
   gameSession.addUser(user)
+  console.log(gameSession)
 
   const initialResponse = createResponse(
     HANDLER_IDS.Init,

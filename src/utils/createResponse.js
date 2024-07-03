@@ -15,7 +15,7 @@ export const createResponse = (handlerId, responseCode, data = null) => {
 
   const buffer = Response.encode(responsePayload).finish();
   const packetLength = Buffer.alloc(config.packet.totalLength);
-  packetLength.writeUInt32BE(buffer.length + config.packet.typeLength);
+  packetLength.writeUInt32BE(buffer.length + config.packet.typeLength + config.packet.totalLength);
 
   const packetType = Buffer.alloc(config.packet.typeLength);
   packetType.writeUInt8(PACKET_TYPE.Normal);
