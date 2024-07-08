@@ -6,5 +6,6 @@ export const onEnd = (socket) => () => {
 
   const gameSession = getGameSession();
   gameSession.removeUser(socket);
+  console.log(gameSession)
   removeUser(socket);
 };

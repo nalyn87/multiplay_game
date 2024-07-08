@@ -20,18 +20,16 @@ export const onData = (socket) => async (data) => {
       socket.buffer = socket.buffer.slice(length);
       try {
         switch (packetType) {
-          case PACKET_TYPE.Ping: {
+          case PACKET_TYPE.Ping:
             break;
-          }
           case PACKET_TYPE.Normal: {
             const { handlerId, userId, payload } = packetParser(packet);
 
             const handler = getHandlerById(handlerId).handler;
             await handler({ socket, userId, payload });
           }
-          case PACKET_TYPE.Location: {
+          case PACKET_TYPE.Location:
             break;
-          }
         }
       } catch (err) {
         console.error(err);
