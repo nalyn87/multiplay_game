@@ -12,7 +12,7 @@ class Game {
   getUser(userId) {
     return this.users.find((user) => user.id === userId);
   }
-  
+
   removeUser(socket) {
     const index = this.users.findIndex((user) => user.socket === socket);
     if (index !== -1) {
@@ -28,13 +28,13 @@ class Game {
     return maxLatency;
   }
 
-  getAllLocation() {
-    // const maxLatency = this.getMaxLatency();
-    const locationData = this.users.map((user) => {
-      const { x, y } = user.getPosition();
-      return { id: user.id, playerId: user.playerId, x, y };
-    });
-    console.log(locationData)
+  getAllLocation(userId) {
+    const locationData = this.users
+      .filter((user) => user.id !== userId)
+      .map((user) => {
+        const { x, y } = user.getPosition();
+        return { id: user.id, playerId: user.playerId, x, y };
+      });
     return createLocationPacket(locationData);
   }
 }
